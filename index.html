@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VN Game Rank 2026 | Vietnam Niche Search</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-dark: #050b14; /* Deeper dark */
+            --bg-panel: #0f172a;
+            --bg-panel-hover: #1e293b;
+            --primary: #06b6d4; /* Cyan for 2026 vibe */
+            --primary-glow: rgba(6, 182, 212, 0.4);
+            --secondary: #ec4899; /* Pink accent for niche */
+            --accent: #10b981; /* Green for good rank */
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #1e293b;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.05) 0%, transparent 20%);
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        button, input, select { font-family: inherit; }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .badge-vn { background: rgba(236, 72, 153, 0.2); color: var(--secondary); border: 1px solid rgba(236, 72, 153, 0.4); }
+        .badge-new { background: rgba(6, 182, 212, 0.2); color: var(--primary); border: 1px solid rgba(6, 182, 212, 0.4); }
+
+        /* --- HEADER --- */
+        header {
+            background: rgba(5, 11, 20, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 0;
+        }
+
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+        }
+
+        .logo span { color: var(--primary); }
+        .logo-sub { font-size: 0.8rem; color: var(--text-muted); font-weight: 400; display: block; margin-top: -5px;}
+
+        /* --- HERO SECTION --- */
+        .hero { text-align: center; padding: 60px 0 40px; }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+
+        /* --- SEARCH INTERFACE --- */
+        .search-container {
+            display: flex;
+            gap: 10px;
+            background: rgba(255,255,255,0.03);
+            padding: 8px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+            flex-wrap: wrap;
+        }
+
+        .search-input-group { flex: 1; position: relative; min-width: 250px; }
+        
+        .search-input-group input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            padding: 12px 20px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .filter-select {
+            background: var(--bg-panel);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            outline: none;
+            font-weight: 500;
+        }
+
+        .search-btn {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover {
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: translateY(-1px);
+        }
+
+        /* --- GRID LAYOUT --- */
+        .content-area {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            padding: 40px 0;
+        }
+
+        @media(min-width: 992px) {
+            .content-area { grid-template-columns: 2.5fr 1fr; }
+        }
+
+        /* --- GAME CARDS --- */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.8);
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: 1px solid var(--primary);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            background: #1e293b;
+            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+        }
+
+        .card-body { padding: 0 20px 20px; display: flex; flex-direction: column; }
+
+        .game-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            margin-top: -20px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+        }
+
+        .game-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .analyze-btn {
+            margin-top: auto;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .analyze-btn:hover {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+        }
+
+        /* --- SIDEBAR (Analysis Panel) --- */
+        .analysis-panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            display: none;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .panel-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .vn-rank-display {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(236, 72, 153, 0.1));
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            width: 100%;
+            justify-content: center;
+        }
+
+        .vn-rank-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .info-box {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .progress-bg {
+            background: rgba(255,255,255,0.1);
+            height: 6px;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .tag { 
+            font-size: 0.75rem; 
+            padding: 4px 10px; 
+            background: rgba(255,255,255,0.05); 
+            border-radius: 20px; 
+            color: var(--primary); 
+        }
+
+        /* --- TOAST --- */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-panel);
+            border-left: 4px solid var(--primary);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .toast.show { transform: translateX(0); }
+
+        /* --- EMPTY STATE --- */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px;
+            color: var(--text-muted);
+            border: 1px dashed var(--border);
+            border-radius: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">
+        <span style="color:var(--primary)">⚡</span>
+        <span id="toast-msg">Data Loaded</span>
+    </div>
+
+    <header>
+        <div class="container nav-wrapper">
+            <div class="logo">
+                🇻🇳 VN GAME RANK <span style="font-size:1rem; color:var(--text-muted); font-weight:400;">2026</span>
+            </div>
+            <nav style="display: flex; gap: 20px;">
+                <a href="#" style="color:white; font-weight:600;">Dashboard</a>
+                <a href="#" style="color:var(--text-muted);">Niche Report</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Vietnam Niche Game Search 2026</h1>
+                <p>Discover top-ranking games, analyze local search volume, and explore emerging niches in the Vietnamese market.</p>
+                
+                <div class="search-container">
+                    <div class="search-input-group">
+                        <input type="text" id="searchInput" placeholder="Search game name (e.g., 'Co Tuong', 'Rong Viet')...">
+                    </div>
+                    <select id="genreFilter" class="filter-select">
+                        <option value="all">All Niches</option>
+                        <option value="MMORPG">MMORPG</option>
+                        <option value="MOBA">MOBA</option>
+                        <option value="Card/Strategy">Card & Strategy</option>
+                        <option value="Sim">Simulation</option>
+                        <option value="Action">Action RPG</option>
+                    </select>
+                    <button class="search-btn" onclick="performSearch()">Find Game</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <section class="container content-area">
+            
+            <!-- Left: Search Results -->
+            <div class="results-column">
+                <div class="results-header">
+                    <h3 id="resultCount">Trending Games</h3>
+                    <div style="font-size:0.9rem; color:var(--primary);">Vietnam Region</div>
+                </div>
+                <div id="gameGrid" class="game-grid">
+                    <!-- JS Injected Cards -->
+                </div>
+            </div>
+
+            <!-- Right: Information Panel -->
+            <aside>
+                <div id="analysisPanel" class="analysis-panel">
+                    <div class="panel-header">
+                        <div class="vn-rank-display">
+                            <span style="font-size:0.9rem; color:var(--text-muted)">VN RANK</span>
+                            <span id="panelRank" class="vn-rank-number">#0</span>
+                        </div>
+                        <h2 id="panelTitle" style="margin-top:10px;">Select a Game</h2>
+                        <div id="panelGenre" style="color:var(--primary); font-size:0.9rem; margin-top:5px;">---</div>
+                    </div>
+
+                    <div class="info-box" id="panelInfo">
+                        Click "Analyze" on a game to view detailed information, local search trends, and Vietnam niche rankings for 2026.
+                    </div>
+
+                    <h4 style="margin-bottom:15px; color:white;">Market Performance</h4>
+                    
+                    <div class="metric-row">
+                        <span style="color:var(--text-muted)">VN Search Volume</span>
+                        <span id="valVolume" style="color:white;">-</span>
+                    </div>
+                    <div class="progress-bg"><div id="barVolume" class="progress-fill" style="width:0%"></div></div>
+
+                    <div class="metric-row">
+                        <span style="color:var(--text-muted)">Player Growth (YOY)</span>
+                        <span id="valGrowth" style="color:white;">-</span>
+                    </div>
+                    <div class="progress-bg"><div id="barGrowth" class="progress-fill" style="width:0%; background:var(--secondary)"></div></div>
+
+                    <div class="metric-row" style="margin-top:20px;">
+                        <span style="color:var(--text-muted)">Niche Tags</span>
+                    </div>
+                    <div class="tag-cloud" id="panelTags">
+                        <!-- Tags -->
+                    </div>
+                </div>
+            </aside>
+
+        </section>
+    </main>
+
+    <footer style="text-align:center; padding:30px; color:var(--text-muted); border-top:1px solid var(--border); margin-top:auto;">
+        &copy; 2026 Vietnam Game Market Data. All rights reserved.
+    </footer>
+
+    <script>
+        // --- MOCK DATA: VIETNAM NICHE 2026 ---
+        // Data simulating the Vietnamese gaming market in 2026
+        const gamesData = [
+            {
+                id: 1,
+                title: "Huyền Thoại Rồng (Dragon Legend) 2026",
+                genre: "MMORPG",
+                vnRank: 1,
+                image: "https://picsum.photos/seed/rong/300/200",
+                info: "The most anticipated MMORPG in Vietnam for 2026. Features massive guild wars, deep Vietnamese mythology integration, and cross-platform mobile play.",
+                metrics: { volume: "850,000", growth: "+120%", volumeBar: 95, growthBar: 98 },
+                tags: ["PvP", "Guild War", "Folklore", "VNG"]
+            },
+            {
+                id: 2,
+                title: "Saigon Cyber Racer",
+                genre: "Sim",
+                vnRank: 3,
+                image: "https://picsum.photos/seed/saigon/300/200",
+                info: "A high-octane racing game set in a futuristic Neo-Saigon. Popular for its optimization on mid-range mobile devices common in Vietnam.",
+                metrics: { volume: "320,000", growth: "+45%", volumeBar: 60, growthBar: 45 },
+                tags: ["Racing", "Sci-Fi", "Mobile", "Esports"]
+            },
+            {
+                id: 3,
+                title: "Cờ Tướng Mobile Pro",
+                genre: "Card/Strategy",
+                vnRank: 5,
+                image: "https://picsum.photos/seed/cotuong/300/200",
+                info: "The definitive Chinese Chess (Xiangqi) app for Vietnam. Features AI analysis, live tournaments, and a huge active player base in rural areas.",
+                metrics: { volume: "500,000", growth: "+15%", volumeBar: 75, growthBar: 15 },
+                tags: ["Chess", "Strategy", "Traditional", "AI"]
+            },
+            {
+                id: 4,
+                title: "Làng Việt Simulator",
+                genre: "Sim",
+                vnRank: 8,
+                image: "https://picsum.photos/seed/langviet/300/200",
+                info: "A relaxing farming and life simulation game focusing on the Vietnamese countryside culture. Extremely popular among Gen Z for its aesthetic.",
+                metrics: { volume: "210,000", growth: "+80%", volumeBar: 40, growthBar: 80 },
+                tags: ["Farming", "Relaxing", "Culture", "Indie"]
+            },
+            {
+                id: 5,
+                title: "Arena of Valour: 2026 Edition",
+                genre: "MOBA",
+                vnRank: 2,
+                image: "https://picsum.photos/seed/aov/300/200",
+                info: "Garena's flagship MOBA continues to dominate the esports scene. Updated with 4K textures and revamped heroes for the new year.",
+                metrics: { volume: "920,000", growth: "+5%", volumeBar: 98, growthBar: 5 },
+                tags: ["MOBA", "Esports", "5v5", "Competitive"]
+            },
+            {
+                id: 6,
+                title: "Tam Quốc Chí VNG",
+                genre: "Card/Strategy",
+                vnRank: 12,
+                image: "https://picsum.photos/seed/tamquoc/300/200",
+                info: "A classic strategy card game that has remained relevant. Updated with AR features for 2026.",
+                metrics: { volume: "150,000", growth: "-2%", volumeBar: 30, growthBar: 2 },
+                tags: ["Cards", "History", "Strategy", "PvE"]
+            },
+            {
+                id: 7,
+                title: "Vietnam War: Heroes 1975",
+                genre: "Action",
+                vnRank: 25,
+                image: "https://picsum.photos/seed/war/300/200",
+                info: "A historical FPS focusing on local heroes. Created by an indie studio in Hanoi. High niche interest.",
+                metrics: { volume: "45,000", growth: "+300%", volumeBar: 10, growthBar: 100 },
+                tags: ["FPS", "History", "Indie", "Story"]
+            }
+        ];
+
+        // --- DOM ELEMENTS ---
+        const gameGrid = document.getElementById('gameGrid');
+        const searchInput = document.getElementById('searchInput');
+        const genreFilter = document.getElementById('genreFilter');
+        const resultCount = document.getElementById('resultCount');
+        const analysisPanel = document.getElementById('analysisPanel');
+        const toast = document.getElementById('toast');
+
+        // --- FUNCTIONS ---
+
+        function renderGames(games) {
+            gameGrid.innerHTML = ''; 
+
+            if (games.length === 0) {
+                gameGrid.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No games found in Vietnam database.</h3>
+                        <p>Try searching for 'Rong', 'Saigon', or select a different niche.</p>
+                    </div>
+                `;
+                resultCount.textContent = '0 Results';
+                return;
+            }
+
+            resultCount.textContent = `${games.length} Games Found`;
+
+            games.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.innerHTML = `
+                    <div class="rank-badge">VN #${game.vnRank}</div>
+                    <img src="${game.image}" alt="${game.title}" class="card-image">
+                    <div class="card-body">
+                        <h4 class="game-title">${game.title}</h4>
+                        <div class="game-meta">
+                            <span style="color:var(--primary); font-weight:600">${game.genre}</span>
+                            <span>🔥 Trending</span>
+                        </div>
+                        <button class="analyze-btn" onclick="analyzeGame(${game.id})">View Information & Rank</button>
+                    </div>
+                `;
+                gameGrid.appendChild(card);
+            });
+        }
+
+        function performSearch() {
+            const query = searchInput.value.toLowerCase();
+            const genre = genreFilter.value;
+
+            const filtered = gamesData.filter(game => {
+                const matchesSearch = game.title.toLowerCase().includes(query) || 
+                                      game.tags.some(tag => tag.toLowerCase().includes(query));
+                const matchesGenre = genre === 'all' || game.genre === genre;
+                
+                return matchesSearch && matchesGenre;
+            });
+
+            renderGames(filtered);
+        }
+
+        function analyzeGame(id) {
+            const game = gamesData.find(g => g.id === id);
+            if (!game) return;
+
+            // 1. Show Panel
+            analysisPanel.style.display = 'block';
+
+            // 2. Update Text
+            document.getElementById('panelRank').textContent = `#${game.vnRank}`;
+            document.getElementById('panelTitle').textContent = game.title;
+            document.getElementById('panelGenre').textContent = game.genre + " • 2026 Data";
+            document.getElementById('panelInfo').textContent = game.info;
+
+            // 3. Update Metrics Text
+            document.getElementById('valVolume').textContent = game.metrics.volume;
+            document.getElementById('valGrowth').textContent = game.metrics.growth;
+
+            // 4. Animate Bars
+            setTimeout(() => {
+                document.getElementById('barVolume').style.width = game.metrics.volumeBar + '%';
+                document.getElementById('barGrowth').style.width = game.metrics.growthBar + '%';
+            }, 100);
+
+            // 5. Render Tags
+            const tagContainer = document.getElementById('panelTags');
+            tagContainer.innerHTML = '';
+            game.tags.forEach(tag => {
+                tagContainer.innerHTML += `<span class="tag">#${tag}</span>`;
+            });
+
+            // 6. Scroll sidebar into view on mobile
+            if(window.innerWidth < 992) {
+                analysisPanel.scrollIntoView({behavior: 'smooth'});
+            }
+
+            showToast(`Loaded: ${game.title}`);
+        }
+
+        function showToast(msg) {
+            document.getElementById('toast-msg').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('keyup', (e) => {
+            if(e.key === 'Enter') performSearch();
+        });
+
+        // Initial Render
+        renderGames(gamesData);
+
+    </script>
+</body>
+</html>
